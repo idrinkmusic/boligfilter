@@ -10,10 +10,6 @@ import {
 import Header from "../components/Header";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { dispatch, selectedPropertiesList } = this.props;
     dispatch(fetchPropertiesIfNeeded(selectedPropertiesList));
@@ -28,18 +24,18 @@ class App extends Component {
     }
   }
 
-  handleChange(nextPropertiesList) {
+  handleChange = nextPropertiesList => {
     this.props.dispatch(selectPropertiesList(nextPropertiesList));
     this.props.dispatch(fetchPropertiesIfNeeded(nextPropertiesList));
-  }
+  };
 
-  handleRefreshClick(e) {
+  handleRefreshClick = e => {
     e.preventDefault();
 
     const { dispatch, selectedPropertiesList } = this.props;
     dispatch(invalidatePropertiesList(selectedPropertiesList));
     dispatch(fetchPropertiesIfNeeded(selectedPropertiesList));
-  }
+  };
 
   render() {
     const {
@@ -50,7 +46,7 @@ class App extends Component {
     } = this.props;
     return (
       <div>
-        <Header />
+        <Header onClick={e => this.handleChange(e)} />
 
         <Grid>
           <Row>
@@ -75,7 +71,16 @@ class App extends Component {
               {isFetching && properties.length === 0 && <h2>Loading...</h2>}
               {!isFetching && properties.length === 0 && <h2>Empty.</h2>}
               {properties.length > 0 && (
-                <div style={{ opacity: isFetching ? 0.5 : 1 }} />
+                <div>
+                  <div style={{ opacity: isFetching ? 0.5 : 1 }} />
+
+                  <h2>{selectedPropertiesList}</h2>
+                  <ul>
+                    {properties.map((property, i) => (
+                      <li key={i}>{property.propertyId}</li>
+                    ))}
+                  </ul>
+                </div>
               )}
               {this.props.children}
             </Col>

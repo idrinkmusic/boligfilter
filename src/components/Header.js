@@ -1,11 +1,11 @@
 import React from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
-const Header = () => {
+const Header = props => {
   return (
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="#">Boligfilter</a>
+          <a href="/">Boligfilter</a>
         </Navbar.Brand>
 
         <Navbar.Toggle />
@@ -13,13 +13,13 @@ const Header = () => {
 
       <Navbar.Collapse>
         <Nav pullRight>
-          <NavItem eventKey={1} href="#">
+          <NavItem onClick={() => props.onClick("data1")} eventKey={1} href="#">
             JSON 1
           </NavItem>
-          <NavItem eventKey={2} href="#">
+          <NavItem onClick={() => props.onClick("data2")} eventKey={2} href="#">
             JSON 2
           </NavItem>
-          <NavItem eventKey={3} href="#">
+          <NavItem onClick={() => props.onClick("data3")} eventKey={3} href="#">
             JSON 3
           </NavItem>
         </Nav>

@@ -28,7 +28,7 @@ const receiveProperties = (propertiesList, json) => {
   return {
     type: RECEIVE_PROPERTIES,
     propertiesList,
-    properties: json.map(child => child.data),
+    properties: json,
     receivedAt: Date.now()
   };
 };
