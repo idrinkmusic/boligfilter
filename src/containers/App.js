@@ -7,7 +7,10 @@ import {
   fetchPropertiesIfNeeded,
   invalidatePropertiesList
 } from "../actions";
+
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import MapContainer from "../components/Map";
 
 class App extends Component {
   componentDidMount() {
@@ -50,38 +53,13 @@ class App extends Component {
 
         <Grid>
           <Row>
-            <Col xs={12} sm={4}>
-              Sidebar
+            <Col xs={12} sm={3}>
+              <Sidebar />
             </Col>
 
-            <Col xs={12} sm={8}>
-              Map
-              <p>
-                {lastUpdated && (
-                  <span>
-                    Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{" "}
-                  </span>
-                )}
-                {!isFetching && (
-                  <a href="#" onClick={this.handleRefreshClick}>
-                    Refresh
-                  </a>
-                )}
-              </p>
-              {isFetching && properties.length === 0 && <h2>Loading...</h2>}
-              {!isFetching && properties.length === 0 && <h2>Empty.</h2>}
-              {properties.length > 0 && (
-                <div>
-                  <div style={{ opacity: isFetching ? 0.5 : 1 }} />
+            <Col xs={12} sm={9}>
+              <MapContainer properties={properties} isFetching />
 
-                  <h2>{selectedPropertiesList}</h2>
-                  <ul>
-                    {properties.map((property, i) => (
-                      <li key={i}>{property.propertyId}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
               {this.props.children}
             </Col>
           </Row>
@@ -99,7 +77,7 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   const { selectedPropertiesList, propertiesByList } = state;
   const { isFetching, lastUpdated, items: properties } = propertiesByList[
     selectedPropertiesList
@@ -113,6 +91,6 @@ function mapStateToProps(state) {
     isFetching,
     lastUpdated
   };
-}
+};
 
 export default connect(mapStateToProps)(App);
