@@ -1,3 +1,5 @@
+# Google Maps in React/Redux
+
 This a demo project showcasing how to display data from an API on a Maps, along with Markers and InfoWindows, using React/Redux.
 
 It was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
